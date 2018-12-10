@@ -1,48 +1,48 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
 import "./App.css";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import Home from  "./Home";
-import About from "./About";
-import Topics from "./Topics";
+import {connect} from 'react-redux';
 
 
+class App extends Component<any> {
+  constructor(props:any){
+    super(props)
+  }
 
-class App extends Component {
-
-  
   render() {
-    return (
-      <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo"  height="300px" width="250px"  />
-      </header>
-  <Router>
-    <div>
-        <nav className="navbar navbar-expand-lg bg-info navbar-dark">
-            <ul className="navbar-nav">
-                <li className="nav-item active">
-                  <Link to="/">Home</Link>
-                </li>
-                <li className="nav-item">
-                  <Link to="/about" >About</Link>
-                </li>
-                <li className="nav-item">
-                  <Link to="/topics">Topics</Link>
-                </li>
-            </ul>
-        </nav>
-      <hr />   
-          <Route exact path="/" component={Home} />
-          <Route  path="/about" component={About} />
-          <Route  path="/topics" component={Topics} />
+    const {posts} =this.props; 
+    const listItems = posts.map((item:any) =>
+                  <li key={item.id}>{item.name}{item.id}</li>);
+    console.log("props",posts); 
+
+  const  addPost =()=>{
+      this.props.deletepost()
+    }
+      return( 
+        <div>
+           <div>hello</div>
+           <div>
+           
+             <ul>{listItems}</ul>
+             <button className="btn btn-success" onClick={addPost}>click me</button>
+           </div>
+             
          
-    </div>
-  </Router>
-</div>
-        
-    );
+         </div>
+      
+      );
   }
 }
 
-export default App;
+const mapStateToProps = (state:any)=>{
+ return{
+  posts:state.posts
+ }
+}
+
+const mapDispatchToProps =(Dispatch:any)=>{
+  return{
+    deletepost :() =>{Dispatch({type:"ADD",payload:"this is rajesh added by dispatch in app component"})}
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(App);

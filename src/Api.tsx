@@ -33,11 +33,13 @@ class Api extends React.Component<Iprop, IState> {
     return (
       <ul>
         {items.map(item => (
-          <li key={item.id}>{item.name}------{item.email}</li>
+          <li key={item.id}>Name:{item.name}  &  Email {item.email}</li>
         ))}
         ;
       </ul>
     );
+    
+    
   }
 }
 export default Api;
